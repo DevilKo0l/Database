@@ -1,0 +1,21 @@
+CREATE TABLE employee(
+	employee_id serial PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	email VARCHAR(355) UNIQUE NOT NULL,	
+)
+
+CREATE TABLE work_on(
+	start_date TIMESTAMP
+	due_date TIMESTAMP
+	project_id serial NOT NULL
+	employee_id serial NOT NULL
+	PRIMARY KEY(employee_id, project_id)
+	
+)
+
+CREATE TABLE project(
+	project_id serial PRIMARY KEY,
+	project_name VARCHAR(355) NOT NULL,
+	
+)
