@@ -5,17 +5,45 @@ CREATE TABLE employee(
 	email VARCHAR(355) UNIQUE NOT NULL,	
 )
 
+CREATE TABLE project(
+	project_id serial PRIMARY KEY,
+	project_name VARCHAR(355) NOT NULL,
+	price serial NOTNULL
+	project_description VARCHAR(355),
+	project_status 
+	
+)
+
 CREATE TABLE work_on(
 	start_date TIMESTAMP
 	due_date TIMESTAMP
 	project_id serial NOT NULL
 	employee_id serial NOT NULL
-	PRIMARY KEY(employee_id, project_id)
+	PRIMARY KEY(employee_id, project_id)	
+)
+
+CREATE TABLE technology(
+	tech_name VARCHAR(50) NOT NULL PRIMARY KEY
+	tech_type VARCHAR(50) NOT NULL	
+)
+
+CREATE TABLE project_technology(
+	tech_name VARCHAR(50) NOT NULL
+	project_id serial NOT NULL
+	PRIMARY KEY(tech_name, project_id)
+)
+
+CREATE TABLE employee_skills (
+	employee_role VARCHAR(355) NOT NULL
+	employee_id serial UNIQUE NOT NULL,
+	tech_name VARCHAR(50) NOT NULL
 	
 )
 
-CREATE TABLE project(
-	project_id serial PRIMARY KEY,
-	project_name VARCHAR(355) NOT NULL,
-	
+CREATE TABLE client(
+	client_id_id serial PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	email VARCHAR(355) UNIQUE NOT NULL,
+	phone_number serial(50) UNIQUE NOT NULL
 )
