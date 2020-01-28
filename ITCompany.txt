@@ -2,24 +2,23 @@ CREATE TABLE employee(
 	employee_id serial PRIMARY KEY,
 	first_name VARCHAR(50) NOT NULL,
 	last_name VARCHAR(50) NOT NULL,
-	email VARCHAR(355) UNIQUE NOT NULL,	
+	email VARCHAR(355) UNIQUE NOT NULL,
+                role VARCHAR(50) NOT NULL;	
 )
-
 CREATE TABLE project(
 	project_id serial PRIMARY KEY,
 	project_name VARCHAR(355) NOT NULL,
 	price serial NOTNULL
 	project_description VARCHAR(355),
-	project_status 
-	
+	project_status 	
 )
 
-CREATE TABLE work_on(
-	start_date TIMESTAMP
-	due_date TIMESTAMP
-	project_id serial NOT NULL
-	employee_id serial NOT NULL
-	PRIMARY KEY(employee_id, project_id)	
+CREATE TABLE client(
+	client_id serial PRIMARY KEY,
+	first_name VARCHAR(50) NOT NULL,
+	last_name VARCHAR(50) NOT NULL,
+	email VARCHAR(355) UNIQUE NOT NULL,
+	phone_number serial(50) UNIQUE NOT NULL
 )
 
 CREATE TABLE technology(
@@ -27,23 +26,67 @@ CREATE TABLE technology(
 	tech_type VARCHAR(50) NOT NULL	
 )
 
+CREATE TABLE work_on(
+	start_date TIMESTAMP,
+	due_date TIMESTAMP,
+	project_id integer NOT NULL,
+	employee_id integer NOT NULL,
+	PRIMARY KEY(employee_id, project_id),
+	
+	CONSTRAINST employee_project_id_fkey FOREIGN KEY (project_id)
+		       REFERENCES project (project_id) MATCH SIMPLE
+                                       ON UPDATE NO ACTION ON DELETE NO ACTION,
+
+                CONSTRAINST project_employee_id_fkey FOREIGN KEY (employee_id)
+		       REFERENCES employee (employee_id) MATCH SIMPLE
+                                       ON UPDATE NO ACTION ON DELETE NO ACTION,
+		
+)
+
+
+
 CREATE TABLE project_technology(
-	tech_name VARCHAR(50) NOT NULL
-	project_id serial NOT NULL
-	PRIMARY KEY(tech_name, project_id)
+	tech_name VARCHAR(50) NOT NULL,
+	project_id serial NOT NULL,
+	PRIMARY KEY(tech_name, project_id),
+                
+                CONSTRAINST tech_project_id_fkey FOREIGN KEY (project_id)
+		       REFERENCES project (project_id) MATCH SIMPLE
+                                       ON UPDATE NO ACTION ON DELETE NO ACTION,
+
+                CONSTRAINST project_tech_name_fkey FOREIGN KEY (tech_name)
+		       REFERENCES technology(tech_name) MATCH SIMPLE
+                                       ON UPDATE NO ACTION ON DELETE NO ACTION,
+
 )
 
 CREATE TABLE employee_skills (
-	employee_role VARCHAR(355) NOT NULL
+	skill_level VARCHAR(50) NOT NULL
 	employee_id serial UNIQUE NOT NULL,
-	tech_name VARCHAR(50) NOT NULL
+	tech_name VARCHAR(50) NOT NULL,
+                PRIMARY KEY (tech_name, employee)
 	
+	CONSTRAINST employee_tech_name_fkey FOREIGN KEY (tech_name)
+		       REFERENCES technology(tech_name) MATCH SIMPLE
+                                       ON UPDATE NO ACTION ON DELETE NO ACTION,
+
+                CONSTRAINST tech_employee_id_fkey FOREIGN KEY (employee_id)
+		       REFERENCES employee (employee_id) MATCH SIMPLE
+                                       ON UPDATE NO ACTION ON DELETE NO ACTION,	
 )
 
-CREATE TABLE client(
-	client_id_id serial PRIMARY KEY,
-	first_name VARCHAR(50) NOT NULL,
-	last_name VARCHAR(50) NOT NULL,
-	email VARCHAR(355) UNIQUE NOT NULL,
-	phone_number serial(50) UNIQUE NOT NULL
+CREATE TABLE delivery (
+                delivery_date TIMESTAMP NOT NULL,
+                project_id integer NOT NULL,
+                client_id integer NOT NULL,
+                PRIMARY KEY (project_id, client_id),
+
+	CONSTRAINST project_client_id_fkey FOREIGN KEY (client_id)
+		       REFERENCES client(client_id) MATCH SIMPLE
+                                       ON UPDATE NO ACTION ON DELETE NO ACTION,
+
+                CONSTRAINST client_project_id_fkey FOREIGN KEY (project_id)
+		       REFERENCES project (project_id) MATCH SIMPLE
+                                       ON UPDATE NO ACTION ON DELETE NO ACTION,	
+	
 )
