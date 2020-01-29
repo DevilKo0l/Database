@@ -1,0 +1,63 @@
+--task 1
+SELECT title FROM movies
+WHERE year IN (1998,1999)
+
+--task 2
+SELECT title, price FROM movies
+WHERE price >9
+ORDER BY price
+
+--task 3
+SELECT last_name FROM clients
+WHERE first_name = 'Lisa'
+
+--task 4
+SELECT first_name, last_name FROM clients
+WHERE LENGTH(last_name)-LENGTH(first_name)>=3;
+
+--task 5
+SELECT last_name FROM actors
+WHERE first_name IN ('Arnold', 'Tom', 'Jodie');
+
+--task 6
+SELECT copy_id FROM copies
+WHERE available ='true'
+
+--task 7
+
+SELECT DISTINCT(copy_id) FROM rentals
+WHERE EXTRACT (day FROM date_of_rental) BETWEEN 15 AND 22
+
+
+--task 8
+SELECT copy_id, (date_of_return - date_of_rental) AS rent_time  FROM rentals
+WHERE DATE(date_of_return)-DATE(date_of_rental) > 1;
+
+--Task 9
+SELECT CONCAT(LEFT(first_name,1),'. ',last_name) AS actor FROM actors
+
+--Task 10
+SELECT title FROM movies
+ORDER BY LENGTH(title) ASC
+
+--Task 11
+SELECT title, price FROM movies
+ORDER BY year ASC
+LIMIT 3
+
+--Task 12
+SELECT first_name AS name, left(first_name,1), right(first_name,1) FROM clients
+
+--Task 13
+SELECT first_name FROM clients
+WHERE left(first_name,1) = right(UPPER(first_name),1) 
+
+--Task 14
+SELECT title FROM movies
+WHERE left(right(title,2),1) = 'o'
+
+--task 15
+SELECT first_name || '.' || last_name || '@wsb.pl' AS email FROM clients
+
+
+

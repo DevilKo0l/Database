@@ -1,0 +1,78 @@
+-- --task 1
+SELECT copies.copy_id, movies.title FROM movies
+JOIN copies ON copies.movie_id = movies.movie_id
+
+-- --task 2
+SELECT DISTINCT(title) FROM movies
+JOIN copies ON copies.movie_id = movies.movie_id
+WHERE available ='true'
+
+
+-- --task 3
+SELECT copy_id FROM copies
+JOIN movies ON copies.movie_id = movies.movie_id
+WHERE year = 1984
+
+-- --task 4
+SELECT rentals.date_of_rental, rentals.date_of_return, clients.last_name
+FROM clients
+JOIN rentals ON rentals.client_id = clients.client_id;
+
+-- --task 5
+
+SELECT last_name, title FROM clients
+JOIN rentals ON rentals.client_id = clients.client_id
+JOIN copies ON rentals.copy_id = copies.copy_id
+JOIN movies ON movies.movie_id = copies.movie_id
+
+
+--task 6
+SELECT title, year FROM clients
+JOIN rentals ON clients.client_id = rentals.client_id
+JOIN copies ON rentals.copy_id = copies.copy_id
+JOIN movies ON copies.movie_id = movies.movie_id
+WHERE first_name = 'Gary';
+
+--task 7
+SELECT first_name, last_name FROM clients
+JOIN rentals ON clients.client_id = rentals.client_id
+ORDER BY date_of_rental
+LIMIT 1
+
+--task 8
+SELECT last_name FROM actors
+JOIN starring ON starring.actor_id = actors.actor_id
+JOIN movies ON movies.movie_id = starring.movie_id
+WHERE title = 'Terminator';
+
+--task 9
+SELECT title FROM movies m
+JOIN starring s ON s.movie_id = m.movie_id
+JOIN actors a ON a.actor_id = s.actor_id
+WHERE first_name = 'Robert'
+
+--task 10
+SELECT title FROM movies m
+JOIN copies c ON c.movie_id = m.movie_id
+JOIN rentals r ON r.copy_id = c.copy_id
+ORDER BY (date_of_return - date_of_rental) DESC
+LIMIT 1;
+
+--task 11
+SELECT last_name FROM clients c
+JOIN rentals r ON r.client_id = c.client_id
+WHERE date_of_rental BETWEEN '2005-07-15' AND '2005-07-20'
+
+-- --task 12
+SELECT DISTINCT(title) FROM movies m
+JOIN copies c ON c.movie_id = m.movie_id
+JOIN rentals r ON r.copy_id = c.copy_id
+WHERE date_of_rental BETWEEN '2005-07-15' AND '2005-07-25'
+
+task 13
+SELECT cl.first_name,a.first_name, a.last_name, cl.last_name FROM actors a
+JOIN starring s ON a.actor_id = s.actor_id
+JOIN movies m ON m.movie_id = s.movie_id
+JOIN copies c ON m.movie_id = c.movie_id
+JOIN rentals r ON r.copy_id =c.copy_id
+JOIN clients cl ON cl.client_id=r.client_id
